@@ -78,7 +78,7 @@ class NeuralNetwork(object):
         #### Implementation of the backward pass ####
         ### Backward pass ###
 
-        error = (y-final_outputs)*1 # Output layer error is the difference between desired target and actual output.
+        error = (final_outputs-y)*1 # Output layer error is the difference between desired target and actual output.
         
 
         hidden_error = np.dot(error,self.weights_hidden_to_output.T)
@@ -103,8 +103,8 @@ class NeuralNetwork(object):
             n_records: number of records
 
         '''
-        self.weights_hidden_to_output += (self.lr*delta_weights_h_o)/n_records # update hidden-to-output weights with gradient descent step
-        self.weights_input_to_hidden  += (self.lr*delta_weights_i_h)/n_records # update input-to-hidden weights with gradient descent step
+        self.weights_hidden_to_output -= (self.lr*delta_weights_h_o)/n_records # update hidden-to-output weights with gradient descent step
+        self.weights_input_to_hidden  -= (self.lr*delta_weights_i_h)/n_records # update input-to-hidden weights with gradient descent step
 
     def run(self, features):
         ''' Run a forward pass through the network with input features 
@@ -127,7 +127,7 @@ class NeuralNetwork(object):
 #########################################################
 # Set  hyperparameters here
 ##########################################################
-iterations = 2000
+iterations = 3000
 learning_rate = 0.05
 hidden_nodes = 4
 output_nodes = 3
